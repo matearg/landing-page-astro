@@ -1,90 +1,158 @@
 ---
 interface Props {
-	siteName: string;
+  siteName: string;
 }
 
 const { siteName } = Astro.props;
 ---
 
-<header id="site-header" class="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
-	<nav id="site-nav" class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-		<span class="text-lg font-semibold">{siteName}</span>
-		<div class="flex items-center gap-6">
-			<ul class="flex gap-6 text-sm text-slate-600 dark:text-slate-300">
-				<li><a href="#features" class="hover:text-slate-900 dark:hover:text-white">Características</a></li>
-				<li><a href="#cta" class="hover:text-slate-900 dark:hover:text-white">Empezar</a></li>
-			</ul>
-			<button
-				id="theme-toggle"
-				type="button"
-				aria-label="Cambiar tema"
-				class="rounded-md border border-slate-200 p-2 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-			>
-				<svg id="theme-toggle-sun" class="hidden size-5 dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
-				</svg>
-				<svg id="theme-toggle-moon" class="block size-5 dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646Z" />
-				</svg>
-			</button>
-		</div>
-	</nav>
+<header
+  id="site-header"
+  class="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80"
+>
+  <nav
+    id="site-nav"
+    class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4"
+  >
+    <span class="text-lg font-semibold pointer-events-none">{siteName}</span>
+    <div class="flex items-center gap-6">
+      <ul class="flex gap-6 text-sm text-slate-600 dark:text-slate-300">
+        <li>
+          <a href="#features" class="hover:text-slate-900 dark:hover:text-white"
+            >Características</a
+          >
+        </li>
+        <li>
+          <a href="#cta" class="hover:text-slate-900 dark:hover:text-white"
+            >Empezar</a
+          >
+        </li>
+      </ul>
+      <button
+        id="theme-toggle"
+        type="button"
+        aria-label="Cambiar tema"
+        class="rounded-md border border-slate-200 p-2 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 cursor-pointer"
+      >
+        <svg
+          id="theme-toggle-sun"
+          class="hidden size-5 dark:block"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+          ></path>
+        </svg>
+        <svg
+          id="theme-toggle-moon"
+          class="block size-5 dark:hidden"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646Z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
 </header>
 
 <script>
-	import { gsap, ScrollTrigger } from '../scripts/gsap-setup';
+  import { gsap, ScrollTrigger } from "../scripts/gsap-setup";
 
-	const header = document.getElementById('site-header');
-	const nav = document.getElementById('site-nav');
-	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const header = document.getElementById("site-header");
+  const nav = document.getElementById("site-nav");
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
 
-	const toggleBtn = document.getElementById('theme-toggle');
-	const overlay = document.getElementById('theme-transition-overlay');
+  const toggleBtn = document.getElementById("theme-toggle");
+  const overlay = document.getElementById("theme-transition-overlay");
 
-	toggleBtn?.addEventListener('click', () => {
-		const goingDark = !document.documentElement.classList.contains('dark');
-		const applyTheme = () => {
-			document.documentElement.classList.toggle('dark', goingDark);
-			localStorage.setItem('theme', goingDark ? 'dark' : 'light');
-		};
+  toggleBtn?.addEventListener("click", () => {
+    const goingDark = !document.documentElement.classList.contains("dark");
+    const applyTheme = () => {
+      document.documentElement.classList.toggle("dark", goingDark);
+      localStorage.setItem("theme", goingDark ? "dark" : "light");
+    };
 
-		if (prefersReducedMotion || !overlay) {
-			applyTheme();
-			return;
-		}
+    if (prefersReducedMotion || !overlay) {
+      applyTheme();
+      return;
+    }
 
-		const rect = toggleBtn.getBoundingClientRect();
-		const x = rect.left + rect.width / 2;
-		const y = rect.top + rect.height / 2;
-		const maxRadius = Math.hypot(
-			Math.max(x, window.innerWidth - x),
-			Math.max(y, window.innerHeight - y)
-		);
+    const rect = toggleBtn.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const maxRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
 
-		overlay.style.backgroundColor = goingDark ? '#0f172a' : '#ffffff';
-		const state = { r: 0 };
-		const setClip = () => {
-			overlay.style.clipPath = `circle(${state.r}px at ${x}px ${y}px)`;
-		};
+    overlay.style.backgroundColor = goingDark ? "#0f172a" : "#ffffff";
+    const state = { r: 0 };
+    const setClip = () => {
+      overlay.style.clipPath = `circle(${state.r}px at ${x}px ${y}px)`;
+    };
 
-		gsap.timeline()
-			.to(state, { r: maxRadius, duration: 0.5, ease: 'power2.inOut', onUpdate: setClip, onComplete: applyTheme })
-			.to(state, { r: 0, duration: 0.5, ease: 'power2.inOut', onUpdate: setClip });
-	});
+    gsap
+      .timeline()
+      .to(state, {
+        r: maxRadius,
+        duration: 0.5,
+        ease: "power2.inOut",
+        onUpdate: setClip,
+        onComplete: applyTheme,
+      })
+      .to(state, {
+        r: 0,
+        duration: 0.5,
+        ease: "power2.inOut",
+        onUpdate: setClip,
+      });
+  });
 
-	if (header && nav && !prefersReducedMotion) {
-		gsap.set(nav, { paddingTop: '1rem', paddingBottom: '1rem' });
+  if (header && nav && !prefersReducedMotion) {
+    gsap.set(nav, { paddingTop: "1rem", paddingBottom: "1rem" });
 
-		ScrollTrigger.create({
-			start: 'top -24px',
-			onEnter: () => {
-				gsap.to(nav, { paddingTop: '0.6rem', paddingBottom: '0.6rem', duration: 0.3, ease: 'power2.out' });
-				gsap.to(header, { boxShadow: '0 4px 20px -8px rgb(0 0 0 / 0.15)', duration: 0.3, ease: 'power2.out' });
-			},
-			onLeaveBack: () => {
-				gsap.to(nav, { paddingTop: '1rem', paddingBottom: '1rem', duration: 0.3, ease: 'power2.out' });
-				gsap.to(header, { boxShadow: '0 0 0 0 rgb(0 0 0 / 0)', duration: 0.3, ease: 'power2.out' });
-			},
-		});
-	}
+    ScrollTrigger.create({
+      start: "top -24px",
+      onEnter: () => {
+        gsap.to(nav, {
+          paddingTop: "0.6rem",
+          paddingBottom: "0.6rem",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        gsap.to(header, {
+          boxShadow: "0 4px 20px -8px rgb(0 0 0 / 0.15)",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      },
+      onLeaveBack: () => {
+        gsap.to(nav, {
+          paddingTop: "1rem",
+          paddingBottom: "1rem",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        gsap.to(header, {
+          boxShadow: "0 0 0 0 rgb(0 0 0 / 0)",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      },
+    });
+  }
 </script>

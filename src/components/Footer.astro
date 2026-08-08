@@ -3,40 +3,50 @@ const year = new Date().getFullYear();
 ---
 
 <footer id="cta" class="border-t border-slate-200 dark:border-slate-800">
-	<div class="mx-auto max-w-5xl px-6 py-16 text-center">
-		<h2 class="footer-heading text-2xl font-bold">¿Listo para empezar?</h2>
-		<p class="footer-heading mt-2 text-slate-600 dark:text-slate-400">Esta landing fue construida con Astro + TailwindCSS.</p>
-		<p class="mt-8 text-sm text-slate-400 dark:text-slate-600">© {year}</p>
-	</div>
+  <div class="mx-auto max-w-5xl px-6 py-16 text-center">
+    <h2 class="footer-heading text-2xl font-bold pointer-events-none">
+      ¿Listo para empezar?
+    </h2>
+    <p
+      class="footer-heading mt-2 text-slate-600 dark:text-slate-400 pointer-events-none"
+    >
+      Esta landing fue construida con Astro + TailwindCSS.
+    </p>
+    <p
+      class="mt-8 text-sm text-slate-400 dark:text-slate-600 pointer-events-none"
+    >
+      © {year}
+    </p>
+  </div>
 </footer>
 
 <script>
-	import { gsap } from '../scripts/gsap-setup';
+  import { gsap } from "../scripts/gsap-setup";
 
-	const targets = gsap.utils.toArray<HTMLElement>('.footer-heading');
+  const targets = gsap.utils.toArray<HTMLElement>(".footer-heading");
 
-	if (targets.length) {
-		const mm = gsap.matchMedia();
+  if (targets.length) {
+    const mm = gsap.matchMedia();
 
-		mm.add('(prefers-reduced-motion: no-preference)', () => {
-			gsap.set(targets, { opacity: 0, y: 24 });
-			gsap.to(targets, {
-				opacity: 1,
-				y: 0,
-				duration: 0.6,
-				ease: 'power2.out',
-				stagger: 0.1,
-				scrollTrigger: {
-					trigger: '#cta',
-					start: 'top 80%',
-					end: 'bottom 40%',
-					toggleActions: 'play reverse play reverse',
-				},
-			});
-		});
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.set(targets, { opacity: 0, y: 24 });
+      gsap.to(targets, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: "#cta",
+          start: "top 80%",
+          end: "bottom 40%",
+          toggleActions: "play reverse play reverse",
+        },
+      });
+    });
 
-		mm.add('(prefers-reduced-motion: reduce)', () => {
-			gsap.set(targets, { opacity: 1, y: 0 });
-		});
-	}
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(targets, { opacity: 1, y: 0 });
+    });
+  }
 </script>

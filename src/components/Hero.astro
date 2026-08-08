@@ -1,56 +1,66 @@
 ---
 interface Props {
-	title: string;
-	subtitle: string;
+  title: string;
+  subtitle: string;
 }
 
 const { title, subtitle } = Astro.props;
 ---
 
 <section id="hero" class="mx-auto max-w-5xl px-6 py-24 text-center">
-	<h1 class="hero-title text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
-	<p class="hero-subtitle mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400">{subtitle}</p>
-	<a
-		href="#cta"
-		class="hero-cta mt-8 inline-block rounded-md bg-slate-900 px-6 py-3 text-sm font-medium text-white hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
-	>
-		Comenzar ahora
-	</a>
+  <h1
+    class="hero-title text-4xl font-bold tracking-tight sm:text-5xl pointer-events-none"
+  >
+    {title}
+  </h1>
+  <p
+    class="hero-subtitle mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400 pointer-events-none"
+  >
+    {subtitle}
+  </p>
+  <a
+    href="#cta"
+    class="hero-cta mt-8 inline-block rounded-md bg-slate-900 px-6 py-3 text-sm font-medium text-white hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+  >
+    Comenzar ahora
+  </a>
 </section>
 
 <script>
-	import { gsap, ScrollTrigger } from '../scripts/gsap-setup';
+  import { gsap, ScrollTrigger } from "../scripts/gsap-setup";
 
-	const targets = gsap.utils.toArray<HTMLElement>('.hero-title, .hero-subtitle, .hero-cta');
+  const targets = gsap.utils.toArray<HTMLElement>(
+    ".hero-title, .hero-subtitle, .hero-cta",
+  );
 
-	if (targets.length) {
-		const mm = gsap.matchMedia();
+  if (targets.length) {
+    const mm = gsap.matchMedia();
 
-		mm.add('(prefers-reduced-motion: no-preference)', () => {
-			gsap.set(targets, { opacity: 0, y: 24 });
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.set(targets, { opacity: 0, y: 24 });
 
-			// Hero is already in the viewport on load, so ScrollTrigger's onEnter never
-			// fires for it (no "entering" transition happens). Play the entrance directly,
-			// then use a separate trigger just to reverse/replay as the section leaves/re-enters view.
-			const entrance = gsap.to(targets, {
-				opacity: 1,
-				y: 0,
-				duration: 0.7,
-				ease: 'power2.out',
-				stagger: 0.12,
-			});
+      // Hero is already in the viewport on load, so ScrollTrigger's onEnter never
+      // fires for it (no "entering" transition happens). Play the entrance directly,
+      // then use a separate trigger just to reverse/replay as the section leaves/re-enters view.
+      const entrance = gsap.to(targets, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "power2.out",
+        stagger: 0.12,
+      });
 
-			ScrollTrigger.create({
-				trigger: '#hero',
-				start: 'top top',
-				end: 'bottom top',
-				onLeave: () => entrance.reverse(),
-				onEnterBack: () => entrance.play(),
-			});
-		});
+      ScrollTrigger.create({
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        onLeave: () => entrance.reverse(),
+        onEnterBack: () => entrance.play(),
+      });
+    });
 
-		mm.add('(prefers-reduced-motion: reduce)', () => {
-			gsap.set(targets, { opacity: 1, y: 0 });
-		});
-	}
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(targets, { opacity: 1, y: 0 });
+    });
+  }
 </script>

@@ -1,29 +1,35 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import Features from '../components/Features.astro';
-import Footer from '../components/Footer.astro';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Features from "../components/Features.astro";
+import Footer from "../components/Footer.astro";
 
 const features = [
-	{
-		title: 'Rápido',
-		description: 'Astro genera HTML estático por defecto, sin JavaScript innecesario.',
-	},
-	{
-		title: 'Flexible',
-		description: 'Componentes .astro, o integra React, Vue, Svelte y más cuando lo necesites.',
-	},
-	{
-		title: 'Simple',
-		description: 'Sintaxis parecida a HTML, fácil de aprender si ya sabés JS/TS.',
-	},
+  {
+    title: "Rápido",
+    description:
+      "Astro genera HTML estático por defecto, sin JavaScript innecesario.",
+  },
+  {
+    title: "Flexible",
+    description:
+      "Componentes .astro, o integra React, Vue, Svelte y más cuando lo necesites.",
+  },
+  {
+    title: "Simple",
+    description:
+      "Sintaxis parecida a HTML, fácil de aprender si ya sabés JS/TS.",
+  },
 ];
 ---
 
 <Layout title="Mi Landing con Astro">
-	<Header siteName="MiProyecto" />
-	<Hero title="Aprendiendo Astro" subtitle="Una landing page simple para explorar componentes, layouts y props." />
-	<Features features={features} />
-	<Footer />
+  <Header siteName="MiProyecto" />
+  <Hero
+    title="Aprendiendo Astro"
+    subtitle="Una landing page simple para explorar componentes, layouts y props."
+  />
+  <Features features={features} />
+  <Footer />
 </Layout>
