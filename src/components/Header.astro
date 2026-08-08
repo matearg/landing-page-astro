@@ -1,0 +1,17 @@
+---
+interface Props {
+	siteName: string;
+}
+
+const { siteName } = Astro.props;
+---
+
+<header class="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur">
+	<nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+		<span class="text-lg font-semibold">{siteName}</span>
+		<ul class="flex gap-6 text-sm text-slate-600">
+			<li><a href="#features" class="hover:text-slate-900">Características</a></li>
+			<li><a href="#cta" class="hover:text-slate-900">Empezar</a></li>
+		</ul>
+	</nav>
+</header>

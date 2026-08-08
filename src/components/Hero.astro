@@ -1,0 +1,19 @@
+---
+interface Props {
+	title: string;
+	subtitle: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<section class="mx-auto max-w-5xl px-6 py-24 text-center">
+	<h1 class="text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
+	<p class="mx-auto mt-4 max-w-2xl text-lg text-slate-600">{subtitle}</p>
+	<a
+		href="#cta"
+		class="mt-8 inline-block rounded-md bg-slate-900 px-6 py-3 text-sm font-medium text-white hover:bg-slate-700"
+	>
+		Comenzar ahora
+	</a>
+</section>
