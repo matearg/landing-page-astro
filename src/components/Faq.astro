@@ -1,0 +1,74 @@
+---
+interface Item {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<section
+  id="faq"
+  class="border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
+>
+  <div class="mx-auto max-w-3xl px-6 py-20">
+    <h2 class="text-center text-3xl font-bold pointer-events-none">
+      Preguntas frecuentes
+    </h2>
+    <div class="mt-12 divide-y divide-slate-200 dark:divide-slate-800">
+      {
+        items.map((item) => (
+          <details class="faq-item group py-4 opacity-0">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium [&::-webkit-details-marker]:hidden">
+              {item.question}
+              <span
+                aria-hidden="true"
+                class="text-brand-600 transition-transform group-open:rotate-45 dark:text-brand-400"
+              >
+                +
+              </span>
+            </summary>
+            <p class="mt-3 text-slate-600 dark:text-slate-400">
+              {item.answer}
+            </p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "../scripts/gsap-setup";
+
+  const items = gsap.utils.toArray<HTMLElement>(".faq-item");
+
+  if (items.length) {
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.set(items, { y: 24 });
+      gsap.to(items, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: "#faq",
+          start: "top 75%",
+          end: "bottom 20%",
+          toggleActions: "play reverse play reverse",
+        },
+      });
+    });
+
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(items, { opacity: 1, y: 0 });
+    });
+  }
+</script>

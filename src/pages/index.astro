@@ -3,33 +3,86 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import Features from "../components/Features.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import Stack from "../components/Stack.astro";
+import Faq from "../components/Faq.astro";
+import DotGrid from "../components/DotGrid.astro";
 import Footer from "../components/Footer.astro";
 
 const features = [
   {
+    icon: "bolt" as const,
     title: "Rápido",
     description:
       "Astro genera HTML estático por defecto, sin JavaScript innecesario.",
   },
   {
+    icon: "puzzle" as const,
     title: "Flexible",
     description:
       "Componentes .astro, o integra React, Vue, Svelte y más cuando lo necesites.",
   },
   {
+    icon: "code" as const,
     title: "Simple",
     description:
       "Sintaxis parecida a HTML, fácil de aprender si ya sabés JS/TS.",
   },
 ];
+
+const steps = [
+  {
+    title: "Clonás el proyecto",
+    description: "Instalá las dependencias con pnpm y levantá el servidor de desarrollo.",
+  },
+  {
+    title: "Armás tus secciones",
+    description: "Creá componentes .astro y pasales datos como props tipadas.",
+  },
+  {
+    title: "Publicás",
+    description: "Generá el sitio estático con pnpm build y subilo donde quieras.",
+  },
+];
+
+const tech = [
+  { name: "Astro", description: "HTML estático y componentes sin JS innecesario." },
+  { name: "Tailwind CSS", description: "Estilos utilitarios con configuración en CSS." },
+  { name: "GSAP", description: "Animaciones por scroll, con soporte de reduced motion." },
+];
+
+const faq = [
+  {
+    question: "¿Necesito saber React o Vue?",
+    answer: "No. Todo son componentes .astro y scripts vanilla; no hay ningún framework instalado.",
+  },
+  {
+    question: "¿Funciona el modo oscuro?",
+    answer: "Sí. Se activa desde el botón del encabezado y se recuerda en tu navegador.",
+  },
+  {
+    question: "¿Dónde puedo publicarlo?",
+    answer: "Es un sitio estático, así que funciona en Vercel, Netlify, Cloudflare Pages o cualquier hosting.",
+  },
+  {
+    question: "¿Las animaciones molestan si prefiero menos movimiento?",
+    answer: "No. Todas respetan prefers-reduced-motion y se desactivan automáticamente.",
+  },
+];
 ---
 
-<Layout title="Mi Landing con Astro">
-  <Header siteName="MiProyecto" />
+<Layout title="Astrolab 🚀">
+  <DotGrid />
+  <Header siteName="Astrolab 🚀" />
+  <main id="main">
   <Hero
-    title="Aprendiendo Astro"
-    subtitle="Una landing page simple para explorar componentes, layouts y props."
+    title="Landing pages veloces, sin JavaScript de más"
+    subtitle="Una base con Astro, Tailwind y GSAP para que construyas, pruebes y publiques tu próxima página en minutos."
   />
   <Features features={features} />
+  <HowItWorks steps={steps} />
+  <Stack tech={tech} />
+  <Faq items={faq} />
+  </main>
   <Footer />
 </Layout>
