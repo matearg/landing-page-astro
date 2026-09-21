@@ -1,35 +1,57 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
-	title: string;
+  title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = "Una landing page simple para explorar componentes, layouts y props con Astro y Tailwind CSS.",
+} = Astro.props;
+const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
 ---
 
 <html lang="es">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<script is:inline>
-			const stored = localStorage.getItem('theme');
-			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-			if (stored === 'dark' || (!stored && prefersDark)) {
-				document.documentElement.classList.add('dark');
-			}
-		</script>
-	</head>
-	<body class="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100">
-		<slot />
-		<div
-			id="theme-transition-overlay"
-			aria-hidden="true"
-			class="pointer-events-none fixed inset-0 z-[999]"
-			style="clip-path: circle(0px at 0px 0px);"
-		></div>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonicalURL && <link rel="canonical" href={canonicalURL} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonicalURL && <meta property="og:url" content={canonicalURL} />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <script is:inline>
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      if (stored === "dark" || (!stored && prefersDark)) {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
+  </head>
+  <body class="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[1000] focus:rounded-md focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-white dark:focus:bg-white dark:focus:text-slate-900"
+      >Saltar al contenido</a
+    >
+    <slot />
+    <div
+      id="theme-transition-overlay"
+      aria-hidden="true"
+      class="pointer-events-none fixed inset-0 z-[999]"
+      style="clip-path: circle(0px at 0px 0px);"
+    >
+    </div>
+  </body>
 </html>

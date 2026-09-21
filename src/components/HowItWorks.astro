@@ -1,0 +1,66 @@
+---
+interface Step {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<section id="how" class="border-t border-slate-200 dark:border-slate-800">
+  <div class="mx-auto max-w-5xl px-6 py-20">
+    <h2 class="text-center text-3xl font-bold pointer-events-none">
+      Cómo funciona
+    </h2>
+    <ol class="mt-12 grid gap-8 sm:grid-cols-3">
+      {
+        steps.map((step, i) => (
+          <li class="how-step opacity-0 text-center">
+            <span class="mx-auto flex size-12 items-center justify-center rounded-full bg-brand-600 text-lg font-semibold text-white dark:bg-brand-500">
+              {i + 1}
+            </span>
+            <h3 class="mt-4 font-semibold pointer-events-none">{step.title}</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 pointer-events-none">
+              {step.description}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "../scripts/gsap-setup";
+
+  const steps = gsap.utils.toArray<HTMLElement>(".how-step");
+
+  if (steps.length) {
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.set(steps, { y: 24 });
+      gsap.to(steps, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: "#how",
+          start: "top 75%",
+          end: "bottom 20%",
+          toggleActions: "play reverse play reverse",
+        },
+      });
+    });
+
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(steps, { opacity: 1, y: 0 });
+    });
+  }
+</script>
