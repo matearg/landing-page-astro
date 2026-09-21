@@ -3,9 +3,14 @@ import "../styles/global.css";
 
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = "Una landing page simple para explorar componentes, layouts y props con Astro y Tailwind CSS.",
+} = Astro.props;
+const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
 ---
 
 <html lang="es">
@@ -15,6 +20,15 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonicalURL && <link rel="canonical" href={canonicalURL} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonicalURL && <meta property="og:url" content={canonicalURL} />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <script is:inline>
       const stored = localStorage.getItem("theme");
       const prefersDark = window.matchMedia(
@@ -26,6 +40,11 @@ const { title } = Astro.props;
     </script>
   </head>
   <body class="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[1000] focus:rounded-md focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-white dark:focus:bg-white dark:focus:text-slate-900"
+      >Saltar al contenido</a
+    >
     <slot />
     <div
       id="theme-transition-overlay"
